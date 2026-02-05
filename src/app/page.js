@@ -1,85 +1,66 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Background from "@/components/scene/Background";
-import Envelope from "@/components/letter/Envelope";
-import LetterPaper from "@/components/letter/LetterPaper"; // <--- Importante: Importamos la carta
+import { motion } from "framer-motion";
+
+// 1. IMPORTAMOS LOS COMPONENTES MODULARES
+import FloatingElements from "@/components/ui/FloatingElements";
+import MouseTrail from "@/components/ui/MouseTrail";
+import FooterSection from "@/components/sections/FooterSection"; // (Si no lo tienes, créalo o quítalo por ahora)
+
+// Secciones Principales
+import HeroSection from "@/components/intro/HeroSection";
+import LetterSection from "@/components/intro/LetterSection";
+import TimelineSection from "@/components/sections/TimelineSection";
+import MusicSection from "@/components/sections/MusicSection"; // <--- AQUÍ ESTÁ EL REPRODUCTOR
+import CouponsSection from "@/components/sections/CouponsSection";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <main className="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
-      {/* 1. El Fondo (que ya funciona) */}
-      <Background />
+    <main className="relative min-h-screen bg-[#fff0f5] overflow-x-hidden font-sans selection:bg-pink-200 cursor-default">
       
-      <AnimatePresence mode="wait">
-        {!isOpen ? (
-          /* 2. El Sobre Cerrado */
-          <Envelope key="envelope" onOpen={() => setIsOpen(true)} />
-        ) : (
-          /* 3. LO QUE APARECE AL ABRIR (Aquí estaba el error antes) */
-          <>
-            <motion.div
-              key="content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="relative z-50 flex justify-center items-center w-full"
-            >
-                {/* La Hoja de Papel */}
-                <LetterPaper onClose={() => setIsOpen(false)} />
-            </motion.div>
+      {/* --- FONDO GLOBAL (Aurora) --- */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <motion.div 
+            animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+            transition={{ duration: 25, repeat: Infinity }}
+            className="absolute -top-1/2 -left-1/2 w-[150vw] h-[150vw] bg-pink-300/30 rounded-full blur-[150px] mix-blend-multiply" 
+        />
+        <motion.div 
+            animate={{ scale: [1, 1.5, 1], x: [0, 100, 0] }}
+            transition={{ duration: 30, repeat: Infinity, delay: 2 }}
+            className="absolute top-0 right-0 w-[100vw] h-[100vw] bg-red-200/40 rounded-full blur-[180px] mix-blend-multiply" 
+        />
+      </div>
 
-            {/* Las Polaroids Flotantes (Decoración) */}
-            <Polaroid 
-                className="absolute -top-10 -left-4 md:top-10 md:left-10 -rotate-12 z-50"
-                delay={0.5}
-                text="Tú y yo"
-                imageSrc="/fotos/foto2.jpg"
-            />
+      {/* --- UI GLOBAL --- */}
+      <FloatingElements />
+      <MouseTrail />
 
-            {/* FOTO 2: Abajo a la derecha */}
-            <Polaroid 
-                className="absolute -bottom-10 -right-4 md:bottom-10 md:right-10 rotate-6 z-50"
-                delay={0.8}
-                text="Cali 2026"
-                imageSrc="/fotos/foto3.jpg"
-            />
-          </>
-        )}
-      </AnimatePresence>
+      {/* --- CONTENIDO ORGANIZADO --- */}
+      <div className="relative z-10">
+        
+        {/* 1. Inicio */}
+        <HeroSection />
+
+        {/* 2. Introducción */}
+        <LetterSection />
+
+        {/* 3. Historia */}
+        <TimelineSection />
+
+        {/* 4. Música (Debe verse ahora) */}
+        <MusicSection />
+
+        {/* 5. Regalos */}
+        <CouponsSection />
+
+        {/* 6. Cierre */}
+        <footer className="py-20 text-center">
+            <p className="font-caveat text-xl text-gray-400">Hecho con ❤️ por Anghelo</p>
+        </footer>
+
+      </div>
+      
     </main>
   );
-}
-
-// Componente pequeño para las fotos (puedes dejarlo aquí o moverlo después)
-// Componente Polaroid actualizado para recibir imágenes
-function Polaroid({ className, delay, text, imageSrc }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ delay: delay, type: "spring", stiffness: 50 }}
-            className={`bg-white p-3 shadow-2xl w-48 z-40 transform hover:scale-110 transition-transform duration-300 ${className}`}
-        >
-            {/* Contenedor de la imagen */}
-            <div className="bg-gray-200 h-40 w-full mb-3 flex items-center justify-center overflow-hidden border border-gray-100 relative">
-                {imageSrc ? (
-                    // Si hay imagen, la mostramos
-                    <img 
-                        src={imageSrc} 
-                        alt={text} 
-                        className="object-cover w-full h-full" 
-                    />
-                ) : (
-                    // Si no, mostramos el gris de antes
-                    <span className="text-gray-400 font-caveat text-xl">Sin foto</span>
-                )}
-            </div>
-            <p className="text-center font-caveat text-gray-600 text-xl">{text}</p>
-        </motion.div>
-    )
 }
