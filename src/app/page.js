@@ -14,6 +14,8 @@ import TimelineSection from "@/components/sections/TimelineSection";
 import MusicSection from "@/components/sections/MusicSection"; // <--- AQUÍ ESTÁ EL REPRODUCTOR
 import CouponsSection from "@/components/sections/CouponsSection";
 import FutureSection from "@/components/sections/FutureSection";
+import NotesSection from "@/components/sections/NotesSection";
+import FakeHeroSection from "@/components/sections/FakeHeroSection";
 
 export default function Home() {
   return (
@@ -48,6 +50,8 @@ export default function Home() {
 
         {/* 3. Historia */}
         <TimelineSection />
+
+        <NotesSection />
 
         {/* 4. Música (Debe verse ahora) */}
         <MusicSection />
