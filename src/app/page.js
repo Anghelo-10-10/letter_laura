@@ -13,6 +13,7 @@ import LetterSection from "@/components/intro/LetterSection";
 import TimelineSection from "@/components/sections/TimelineSection";
 import MusicSection from "@/components/sections/MusicSection"; // <--- AQUÍ ESTÁ EL REPRODUCTOR
 import CouponsSection from "@/components/sections/CouponsSection";
+import FutureSection from "@/components/sections/FutureSection";
 
 export default function Home() {
   return (
@@ -53,6 +54,8 @@ export default function Home() {
 
         {/* 5. Regalos */}
         <CouponsSection />
+
+        <FutureSection />
 
         {/* 6. Cierre */}
         <footer className="py-20 text-center">
