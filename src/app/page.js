@@ -16,6 +16,7 @@ import CouponsSection from "@/components/sections/CouponsSection";
 import FutureSection from "@/components/sections/FutureSection";
 import NotesSection from "@/components/sections/NotesSection";
 import FakeHeroSection from "@/components/sections/FakeHeroSection";
+import DedicationSection from "@/components/sections/DedicationSection";
 
 export default function Home() {
   return (
@@ -52,6 +53,8 @@ export default function Home() {
         <TimelineSection />
 
         <NotesSection />
+
+        <DedicationSection />
 
         {/* 4. Música (Debe verse ahora) */}
         <MusicSection />
